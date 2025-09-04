@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>EXUpdatesCheckOnLaunch</key>
+    <string>ALWAYS</string>
+    <key>EXUpdatesCodeSigningCertificate</key>
+    <string>-----BEGIN CERTIFICATE-----&#xD;
+MIIC0zCCAbugAwIBAgIJF5E4jUNtKaSWMA0GCSqGSIb3DQEBCwUAMBIxEDAOBgNV&#xD;
+BAMTB2Nsb3N1cmUwIBcNMjUwODI1MTAyOTU0WhgPMjEyNTA4MjUxMDI5NTRaMBIx&#xD;
+EDAOBgNVBAMTB2Nsb3N1cmUwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIB&#xD;
+AQDKAteNXgv90GNrbfIxVpfMH4AAhcXkeF29Ci15/fcWk5EZnQxR4Y8oJWg96AeW&#xD;
+HNZCAhBaVm+fck3yN4eYNH2045Dmf1IFY6A1SxDaF0myMWNFHnvQd6eArC5KoRGK&#xD;
+tYr90iQs9ueo58ksQ22WoLckJemJWMt1btjKqjjWhXK5QbtWvRTh6D5RpRH4VpDH&#xD;
+2WJiDN24JJI+mBqosvtcB0p8gknXjfdYy2VulPQe0foAx85UugeitKXJfx5KFEcO&#xD;
+WZkhMysjOY/4zVMcg9yLRxW0MaqRqbHkrs3puAvdXOhRHaVZmInHY/U3+chkHOD+&#xD;
+Totyh2+v9KJ2rFlGdvEC2ZDHAgMBAAGjKjAoMA4GA1UdDwEB/wQEAwIHgDAWBgNV&#xD;
+HSUBAf8EDDAKBggrBgEFBQcDAzANBgkqhkiG9w0BAQsFAAOCAQEAMpjEvPxHPWzx&#xD;
+ysUE4LUpIQHax3hcCHUMAcQ2Vs86kh+QL1eeEk6WDvd+Xo1+/iQvPNg6TjoLlCe0&#xD;
+YFtwdQ0NG70dhFRuV8lDw369t1XSU4dunZi8cm/RiZLD7n9h3DQdxP5SSM1+fHul&#xD;
+EyaTUnBgqz7no4GZ1ef6aa5paqR3/fumCbCPf/tg0reWhHP3Al4xtFEsidvn2dEE&#xD;
+OBhNI079o6WOuMuns0Z/B0QbK2hBP2XkEw1be1YDnf6Td60KlNxVmTLqc6qEAVq1&#xD;
+Om/hjdgHIJH0ZMjAYnzXOcYdJrYVSr5U/h9LbJurmnKUnNHz1RHP1q2MwUUdVk55&#xD;
+6iXF5BfGFA==&#xD;
+-----END CERTIFICATE-----&#xD;
+</string>
+    <key>EXUpdatesCodeSigningMetadata</key>
+    <dict>
+      <key>keyid</key>
+      <string>main</string>
+      <key>alg</key>
+      <string>rsa-v1_5-sha256</string>
+    </dict>
+    <key>EXUpdatesEnabled</key>
+    <true/>
+    <key>EXUpdatesLaunchWaitMs</key>
+    <integer>0</integer>
+    <key>EXUpdatesRequestHeaders</key>
+    <dict>
+      <key>expo-channel-name</key>
+      <string>production</string>
+    </dict>
+    <key>EXUpdatesRuntimeVersion</key>
+    <string>0.0.1</string>
+    <key>EXUpdatesURL</key>
+    <string>https://prts-ota.arknights.app/manifest</string>
+  </dict>
+</plist>

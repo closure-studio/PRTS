@@ -2,14 +2,15 @@
   "expo": {
     "name": "PRTS",
     "slug": "PRTS",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "PRTS",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.closure.prts"
     },
     "android": {
       "adaptiveIcon": {
@@ -38,6 +39,16 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "5832101c-d640-4aed-b084-8ffe892305a2"
+      }
+    },
+    "runtimeVersion": "0.0.1",
+    "updates": {
+      "url": "https://prts-ota.arknights.app/api/manifest"
     }
   }
 }

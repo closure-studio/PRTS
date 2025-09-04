@@ -3,20 +3,32 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
-    "start": "expo start --dev-client",
+    "start": "expo start --private-key-path certs/private-key.pem",
     "reset-project": "node ./scripts/reset-project.js",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
     "lint": "expo lint",
-    "build": "expo build"
+    "build": "expo build",
+    "export": "yarn expo export --platform all",
+    "create_production_rollback": "RELEASE_CHANNEL=production eoas rollback --branch production",
+    "create_preview_rollback": "RELEASE_CHANNEL=preview eoas rollback --branch preview",
+    "ota:prod": "RELEASE_CHANNEL=production eoas publish --nonInteractive --branch production --disableRepositoryCheck",
+    "ota:preview": "RELEASE_CHANNEL=preview eoas publish --nonInteractive --branch preview --disableRepositoryCheck",
+    "preBuild:preview": "RELEASE_CHANNEL=preview npx expo prebuild ",
+    "preBuild:prod": "RELEASE_CHANNEL=production npx expo prebuild ",
+    "build:pre": "cd android && ./gradlew clean && ./gradlew assembleRelease",
+    "build:prod": "cd android && ./gradlew clean && ./gradlew assembleRelease"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",
+    "@microsoft/react-native-clarity": "^4.3.3",
     "@react-navigation/bottom-tabs": "^7.3.10",
     "@react-navigation/elements": "^2.3.8",
     "@react-navigation/native": "^7.1.6",
-    "expo": "~53.0.22",
+    "axios": "^1.11.0",
+    "dayjs": "^1.11.18",
+    "expo": "^53.0.20",
     "expo-blur": "~14.1.5",
     "expo-constants": "~17.1.7",
     "expo-dev-client": "~5.2.4",
@@ -29,6 +41,7 @@
     "expo-status-bar": "~2.2.3",
     "expo-symbols": "~0.4.5",
     "expo-system-ui": "~5.0.11",
+    "expo-updates": "^0.28.17",
     "expo-web-browser": "~14.2.0",
     "install": "^0.13.0",
     "react": "19.0.0",
@@ -43,10 +56,13 @@
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
+    "@lucaa6i/eoas": "^1.3.1",
+    "@react-native-community/cli": "latest",
     "@types/react": "~19.0.10",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~9.2.0",
     "typescript": "~5.8.3"
   },
-  "private": true
+  "private": true,
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
