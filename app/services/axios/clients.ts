@@ -10,7 +10,7 @@ const useServicesClient = () => {
     const arkQuota = new ArkHost(config.current.ARK_QUOTA);
     const idServer = new ArkHost(config.current.ID_SERVER);
 
-    
+
     const updateServiceConfigs = (newConfig: Partial<IServiceConfigs>) => {
         config.current = { ...config.current, ...newConfig };
     }
@@ -29,7 +29,7 @@ const useServicesClient = () => {
         }
     }, [config.current]);
 
-    return { idServer, arkQuota, arkHost };
+    return { idServer, arkQuota, arkHost, updateServiceConfigs };
 };
 
 export default useServicesClient;
