@@ -10,6 +10,22 @@ export interface IServiceConfig {
     HOST: string;
 }
 
+export interface ApiCallOptions {
+    data?: any;
+    params?: Record<string, any>;
+    headers?: Record<string, string>;
+    timeout?: number;
+    errorPrefix?: string;
+    [key: string]: any;
+}
+
+
+export interface IApiResponse<T> {
+    code: number;
+    data?: T;
+    message: string;
+}
+
 export interface AxiosClient {
     axiosInstance: any;
     updateHost: (newHost: string) => void;
