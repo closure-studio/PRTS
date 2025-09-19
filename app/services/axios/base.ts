@@ -8,7 +8,7 @@ abstract class ServerBase {
     // axios instance
     private instance: AxiosInstance;
     private isTokenExpired?: () => boolean;
-    private refreshToken?: () => Promise<string | null>;
+    private refreshToken?: () => Promise<void>;
     private isRefreshing = false;
     private failedQueue: Array<{
         resolve: (token: string | null) => void;
@@ -136,7 +136,7 @@ abstract class ServerBase {
 
     public setTokenRefreshLogic(
         isTokenExpired: () => boolean,
-        refreshToken: () => Promise<string | null>
+        refreshToken: () => Promise<void>
     ) {
         this.isTokenExpired = isTokenExpired;
         this.refreshToken = refreshToken;

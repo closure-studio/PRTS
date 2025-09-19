@@ -1,41 +1,44 @@
-import { CONSTANTS } from '@/app/constants/constants';
-import { IServiceConfigs } from '@/app/types/axios';
-import axios from 'axios';
-import { useEffect, useRef, useState } from 'react';
-import ArkHost from './arkHost';
+import useStore from '@/app/stores/persistedStore';
 import { IAuthInfo } from '@/app/types/auth';
-import IdServer from './idserver';
+import { jwtDecode } from "jwt-decode";
+import { useEffect } from 'react';
+import ArkHost from './arkHost';
+import IdServer from './idServer';
 
 const useServicesClient = () => {
-    const config = useRef<IServiceConfigs>(CONSTANTS.SERVICE_CONFIGS);
-    const [authInfo, setAuthInfo] = useState<IAuthInfo | null>(null);
-    const arkHost = new ArkHost(config.current.ARK_HOST);
-    const arkQuota = new ArkHost(config.current.ARK_QUOTA);
-    const idServer = new IdServer(config.current.ID_SERVER);
+    // case 1, if credentials is null, we can't login to get token
+    const { authCredentials, setAuthCredentials } = useStore((state) => state);
+    const { authInfo, setAuthInfo } = useStore((state) => state);
+    const { serviceConfigs } = useStore((state) => state);
+
+    const arkHost = new ArkHost(serviceConfigs.ARK_HOST);
+    const arkQuota = new ArkHost(serviceConfigs.ARK_QUOTA);
+    const idServer = new IdServer(serviceConfigs.ID_SERVER);
 
     // Token refresh function
-    const refreshToken = async (): Promise<string | null> => {
+    const refreshToken = async (): Promise<void> => {
         try {
-            // 这里需要您的登录凭据，可能需要从本地存储获取
-            const response = await idServer.login("your_username", "your_password");
-            if (response?.token) {
-                const newAuthInfo: IAuthInfo = {
-                    ...response,
-                    exp: Date.now() + 1000, // 假设expiresIn是秒数
-                    createdAt: Date.now(),
-                    email: '',
-                    isAdmin: false,
-                    permission: 0,
-                    status: 0,
-                    uuid: ''
-                };
-                setAuthInfo(newAuthInfo);
-                return response.token;
+            if (!authCredentials) {
+                console.warn('No credentials available for token refresh.');
+                return;
             }
-            return null;
+            const { email, password } = authCredentials;
+            if (!email || !password) {
+                console.warn('Incomplete credentials for token refresh.');
+                return;
+            }
+            // 这里需要您的登录凭据，可能需要从本地存储获取
+            const response = await idServer.login(email, password);
+            if (response?.token) {
+                const payload = jwtDecode<IAuthInfo>(response.token);
+                setAuthInfo(payload);
+                setAuthCredentials({ ...authCredentials, token: response.token });
+                return;
+            }
+            return;
         } catch (error) {
             console.error('Token refresh failed:', error);
-            return null;
+            return;
         }
     };
 
@@ -45,30 +48,25 @@ const useServicesClient = () => {
         return Date.now() >= authInfo.exp;
     };
 
-    const updateServiceConfigs = (newConfig: Partial<IServiceConfigs>) => {
-        config.current = { ...config.current, ...newConfig };
-    }
-
-
     useEffect(() => {
-        arkHost.setBaseURL(config.current?.ARK_HOST.HOST);
-        idServer.setBaseURL(config.current?.ID_SERVER.HOST);
-        arkQuota.setBaseURL(config.current?.ARK_QUOTA.HOST);
+        arkHost.setBaseURL(serviceConfigs.ARK_HOST.HOST);
+        idServer.setBaseURL(serviceConfigs.ID_SERVER.HOST);
+        arkQuota.setBaseURL(serviceConfigs.ARK_QUOTA.HOST);
 
         // Set token refresh logic for all clients except idServer
         arkHost.setTokenRefreshLogic(isTokenExpired, refreshToken);
         arkQuota.setTokenRefreshLogic(isTokenExpired, refreshToken);
-        
+
         // update jwt token
-        if (config.current?.AUTH_TOKEN) {
-            const authValue = `Bearer ${config.current.AUTH_TOKEN}`;
+        if (authCredentials?.token) {
+            const authValue = `Bearer ${authCredentials.token}`;
             idServer.setAuthToken(authValue);
             arkQuota.setAuthToken(authValue);
             arkHost.setAuthToken(authValue);
         }
-    }, [config.current]);
+    }, [serviceConfigs, authCredentials?.token]);
 
-    return { idServer, arkQuota, arkHost, updateServiceConfigs };
+    return { idServer, arkQuota, arkHost };
 };
 
 export default useServicesClient;

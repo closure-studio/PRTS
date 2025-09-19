@@ -1,14 +1,10 @@
 import { IServiceConfigs } from "../types/axios";
 
-const CLARITY_WEB_PROD_ID = "t0xwcydiwk";
-const CLARITY_WEB_PREVIEW_ID = "t0eivofjdb";
 const CLARITY_NATIVE_PROD_ID = "t0eiarz3dw";
 const CLARITY_NATIVE_PREVIEW_ID = "syvx7716cr";
 
 interface IConstants {
   CLARITY: {
-    WEB_PREVIEW_ID: string;
-    WEB_PROD_ID: string;
     NATIVE_PREVIEW_ID: string;
     NATIVE_PROD_ID: string;
   };
@@ -17,8 +13,6 @@ interface IConstants {
 
 export const CONSTANTS: IConstants = {
   CLARITY: {
-    WEB_PREVIEW_ID: CLARITY_WEB_PREVIEW_ID,
-    WEB_PROD_ID: CLARITY_WEB_PROD_ID,
     NATIVE_PREVIEW_ID: CLARITY_NATIVE_PREVIEW_ID,
     NATIVE_PROD_ID: CLARITY_NATIVE_PROD_ID,
   },
@@ -32,6 +26,5 @@ export const CONSTANTS: IConstants = {
     ID_SERVER: {
       HOST: `https://passport.ltsc.vip`
     },
-    AUTH_TOKEN: "",
   },
-} as const;
+} as const satisfies IConstants;
