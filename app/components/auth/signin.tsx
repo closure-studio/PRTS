@@ -9,22 +9,56 @@ import {
 } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
 import { Input, InputField } from '@/components/ui/input';
+import { Toast, ToastDescription, ToastTitle, useToast } from '@/components/ui/toast';
 import { VStack } from '@/components/ui/vstack';
 import { JSX, useState } from "react";
 
 const log = LOG.extend('AxiosBase');
 
 const SignIn = (): JSX.Element => {
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const { idServer } = useServicesClient();
+    const toast = useToast();
 
     const handleLogin = async () => {
-        log.debug('Attempting login with email:', email);
-        log.debug('Attempting login with password:', password);
-        const resp = await idServer.login(email, password);
-        log.debug('Login response:', resp);
+        try {
+            const resp = await idServer.login(email, password);
+            log.debug('Login response:', resp);
+
+            // 登录成功的 toast
+            toast.show({
+                placement: "top",
+                render: ({ id }) => {
+                    return (
+                        <Toast nativeID={id} action="success" variant="solid">
+                            <ToastTitle>登录成功</ToastTitle>
+                            <ToastDescription>
+                                欢迎回来！
+                            </ToastDescription>
+                        </Toast>
+                    );
+                },
+            });
+
+        } catch (error) {
+            log.error('Login error:', error);
+
+            // 登录失败的 toast
+            toast.show({
+                placement: "top",
+                render: ({ id }) => {
+                    return (
+                        <Toast nativeID={id} action="error" variant="solid">
+                            <ToastTitle>登录失败</ToastTitle>
+                            <ToastDescription>
+                                请检查您的邮箱和密码
+                            </ToastDescription>
+                        </Toast>
+                    );
+                },
+            });
+        }
     };
 
     return (

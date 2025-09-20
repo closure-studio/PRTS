@@ -30,9 +30,9 @@ class IdServer extends ServerBase {
             }
         }
     }
-    async login(username: string, password: string): Promise<IAuthLoginResponse | undefined> {
+    async login(email: string, password: string): Promise<IAuthLoginResponse | undefined> {
         return this.post<IAuthLoginResponse>('/api/v1/login', {
-            data: { username, password },
+            data: { email, password },
             errorPrefix: 'Login'
         });
     }
