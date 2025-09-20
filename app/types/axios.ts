@@ -3,7 +3,6 @@ export interface IServiceConfigs {
     ARK_HOST: IServiceConfig;
     ARK_QUOTA: IServiceConfig;
     ID_SERVER: IServiceConfig;
-    AUTH_TOKEN: string;
 }
 
 export interface IServiceConfig {

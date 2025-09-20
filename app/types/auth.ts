@@ -1,8 +1,7 @@
-
-
-export interface IAuthLoginRequest {
-    email: string;
-    password: string;
+export interface IAuthCredentials {
+    email?: string;
+    password?: string;
+    token?: string;
 }
 
 export interface IAuthLoginResponse {

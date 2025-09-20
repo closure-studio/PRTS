@@ -1,5 +1,5 @@
 import { IAuthLoginResponse } from "@/app/types/auth";
-import { ApiCallOptions, IApiResponse, IServiceConfig } from "@/app/types/axios";
+import { IApiResponse, IServiceConfig } from "@/app/types/axios";
 import ServerBase from "./base";
 class IdServer extends ServerBase {
     constructor(config: IServiceConfig) {
@@ -30,9 +30,9 @@ class IdServer extends ServerBase {
             }
         }
     }
-    async login(username: string, password: string): Promise<IAuthLoginResponse | undefined> {
-        return this.post<IAuthLoginResponse>('/login', {
-            data: { username, password },
+    async login(email: string, password: string): Promise<IAuthLoginResponse | undefined> {
+        return this.post<IAuthLoginResponse>('/api/v1/login', {
+            data: { email, password },
             errorPrefix: 'Login'
         });
     }

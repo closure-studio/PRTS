@@ -1,11 +1,11 @@
-import { ActivityIndicator, Button, Text, View } from "react-native";
-import * as Clarity from "@microsoft/react-native-clarity";
-import { useState } from "react";
 import * as Updates from "expo-updates";
-export default function Index() {
-  Clarity.initialize("t0eiarz3dw", {
-    logLevel: Clarity.LogLevel.Verbose, // Note: Use "LogLevel.Verbose" value while testing to debug initialization issues.
-  });
+import { useState } from "react";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { useClarity } from "./hooks/clarity/useClarity";
+import Navigation from "./navigation/navigation";
+
+export default function App() {
+  useClarity();
   const [status, setStatus] = useState<string>("热更新大成功");
   const [loading, setLoading] = useState(false);
   const handleUpdate = async () => {
@@ -29,16 +29,19 @@ export default function Index() {
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>{status}</Text>
-      {loading && <ActivityIndicator style={{ margin: 10 }} />}
-      <Button title="manual update" onPress={handleUpdate} disabled={loading} />
-    </View>
+    <SafeAreaProvider>
+      <Navigation />
+    </SafeAreaProvider>
+    // <View
+    //   style={{
+    //     flex: 1,
+    //     justifyContent: "center",
+    //     alignItems: "center",
+    //   }}
+    // >
+    //   <Text>{status}</Text>
+    //   {loading && <ActivityIndicator style={{ margin: 10 }} />}
+    //   <Button title="manual update" onPress={handleUpdate} disabled={loading} />
+    // </View>
   );
 }
